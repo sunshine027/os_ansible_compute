@@ -1,0 +1,25 @@
+---
+- name: verify compute work well
+  hosts: controller
+  user: cloud
+  vars: 
+    admin_auth:
+      OS_TENANT_NAME: admin
+      OS_USERNAME: admin
+      OS_PASSWORD: admin
+      OS_AUTH_URL: http://controller:35357/v2.0
+    compute_name: otcloud-compute1
+  tasks:
+    - name: verity nova
+      shell: nova service-list | grep "{{compute_name}}"
+      register: result
+      environment: admin_auth
+
+    - name: verity neutron 
+      shell: neutron agent-list | grep "{{compute_name}}" | grep "Open vSwitch agent"
+      register: result
+      environment: admin_auth
+    
+
+      
+

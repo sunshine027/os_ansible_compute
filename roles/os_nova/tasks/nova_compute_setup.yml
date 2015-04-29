@@ -1,0 +1,34 @@
+---
+- name: Install the packages
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+    #update_cache: yes
+    cache_valid_time: 600
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
+  with_items: nova_compute_apt_packages
+  tags:
+     - nova-apt-packages
+
+- name: check cpu count
+  shell: egrep -c '(vmx|svm)' /proc/cpuinfo
+  register: cpu_count
+
+- name: Copy nova config
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: "nova.conf.j2", dest: "/etc/nova/nova.conf" }
+  notify: Restart nova services
+  tags:
+    - nova-config
+    - nova-post-install
+
+- name: remove default sqllite file
+  file:
+    path: "/var/lib/nova/nova.sqlite"
+    state: "absent"

@@ -1,0 +1,9 @@
+---
+- name: configure name resolution
+  lineinfile: dest=/etc/hosts line="{{compute_management_ip}}   {{compute_alias}}"
+
+- name: configure name resolution
+  lineinfile: dest=/etc/hosts line="{{controller_management_ip}}      {{controller_alias}}"
+
+- name: configure name resolution
+  lineinfile: dest=/etc/hosts line="{{neutron_management_ip}}      {{neutron_alias}}"

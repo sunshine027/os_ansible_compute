@@ -1,0 +1,4 @@
+---
+# tasks file for os_init
+- include: compute_name_resolution.yml
+- include: compute_ntp.yml

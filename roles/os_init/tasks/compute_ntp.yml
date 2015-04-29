@@ -1,0 +1,14 @@
+---
+- name: install ntp
+  apt: name=ntp state=latest
+  register: install_packages
+  until: install_packages|success
+  tags:
+    - install-ntp
+
+- name: delete old server
+  lineinfile: dest=/etc/ntp.conf regexp='^server .*' state=absent
+
+- name: add new server
+  lineinfile: dest=/etc/ntp.conf line='server {{controller_alias}} iburst'
+  notify: Restart ntp service

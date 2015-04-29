@@ -1,0 +1,21 @@
+---
+# Vars for role os_keystone
+debug: True
+verbose: True
+
+controller_alias: controller
+compute_alias: otcloud-computer1
+neutron_alias: network
+
+rabbitmq_server: "{{ controller_alias }}"
+rabbitmq_password: guest
+
+controller_management_ip: 192.168.0.100
+neutron_management_ip: 192.168.0.101
+compute_management_ip: 192.168.0.111
+
+compute_tunels_ip: 192.168.0.132
+neutron_tunels_ip: 192.168.0.131
+
+neutron_external_ip: 10.238.153.113
+

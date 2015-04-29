@@ -1,0 +1,50 @@
+[DEFAULT]
+# Logs / State
+debug = {{ debug }}
+verbose = {{ verbose }}
+
+# RabbitMQ
+rpc_backend = rabbit
+rabbit_host = {{ rabbitmq_server }}
+rabbit_password = {{ rabbitmq_password }}
+
+# Authentication
+auth_strategy = keystone
+
+# Network
+my_ip = {{ compute_management_ip }}
+
+# VNC
+vnc_enabled = True
+vncserver_listen = 0.0.0.0
+vncserver_proxyclient_address = {{ compute_management_ip }}
+novncproxy_base_url = http://{{ controller_alias }}:6080/vnc_auto.html
+
+#network
+network_api_class = nova.network.neutronv2.api.API
+security_group_api = neutron
+linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
+firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+[keystone_authtoken]
+auth_uri = http://{{ controller_alias }}:5000/v2.0
+identity_uri = http://{{ controller_alias }}:35357
+admin_tenant_name = service
+admin_user = {{ nova_service_user_name }}
+admin_password = {{ nova_service_password }}
+
+[glance]
+host = {{ controller_alias }}
+
+{% if cpu_count.stdout == 0 %}
+[libvirt]
+virt_type = qemu
+{% endif %}
+
+[neutron]
+url = http://{{ controller_alias }}:9696
+auth_strategy = keystone
+admin_auth_url = http://{{ controller_alias }}:35357/v2.0
+admin_tenant_name = service
+admin_username = {{ neutron_service_user_name }}
+admin_password = {{ neutron_service_password }}

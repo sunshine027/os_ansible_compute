@@ -1,0 +1,4 @@
+---
+# tasks file for os_nova
+#- include: nova_db_setup.yml
+- include: nova_compute_setup.yml

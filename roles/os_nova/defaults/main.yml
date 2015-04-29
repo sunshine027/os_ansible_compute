@@ -1,0 +1,19 @@
+---
+# defaults file for os_nova
+# mysql info
+#root_user: root
+#root_password: 123456
+#address: localhost
+#nova_database: nova
+#nova_user: nova
+#nova_container_mysql_password: 123456
+#nova_system_user_name: nova
+
+# nova apt pckages
+nova_compute_apt_packages:
+   - sysfsutils
+   - nova-compute
+
+# nova config file
+nova_service_user_name: nova
+nova_service_password: nova

@@ -1,0 +1,21 @@
+[DEFAULT]
+verbose = {{ verbose }}
+debug = {{ debug }}
+
+## RabbitMQ
+rpc_backend = rabbit
+rabbit_host = {{ rabbitmq_server }}
+rabbit_password = {{ rabbitmq_password }}
+
+auth_strategy = keystone
+
+core_plugin = ml2
+service_plugins = router
+allow_overlapping_ips = True
+
+[keystone_authtoken]
+auth_uri = http://{{ controller_alias }}:5000/v2.0
+identity_uri = http://{{ controller_alias }}:35357
+admin_tenant_name = service
+admin_user = {{ neutron_service_user_name }}
+admin_password = {{ neutron_service_password }}
